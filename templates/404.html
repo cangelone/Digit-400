@@ -1,0 +1,14 @@
+{% extends "header.html" %}
+
+{% block body %}
+<div class="container">
+
+
+<h1>404 -- page not found</h1>
+
+<p>That page does not exist </p>
+   <a href="javascript:history"> <button type="button" class="btn btn-warning"></button> </a>
+</div>
+
+<img src="{{url_for('static',filename='images/pizzacat.png')}}"
+{% endblock %}
