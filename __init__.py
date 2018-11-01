@@ -80,7 +80,7 @@ def login():
             
             
             
-            if sha256_crypt.verify(request.form['password'], data):
+            if sha256_crypt.verify(request.form['passowrd'], data):
                 session['logged_in'] = True
                 session['username'] = request.form['username']
                 flash("You are now logged in "+ session['username']+"!")
@@ -111,7 +111,7 @@ def logout():
 class RegistrationForm(Form):
     username = TextField("Username", [validators.Length(min=4, max=20)])
     email = TextField("Email Address", [validators.Length(min=6, max=50)])
-    password = PasswordField("New Password", [validators.Required(), validators.EqualTo("confirm", message="Password must match")])
+    passowrd = PasswordField("New Password", [validators.Required(), validators.EqualTo("confirm", message="Password must match")])
     confirm = PasswordField("Repeat Password")
     accept_tos = BooleanField("I accept the Terms of Service and Privacy Notice", [validators.Required()])
     
@@ -122,17 +122,17 @@ def register_page():
         if request.method == "POST" and form.validate():
             username = form.username.data
             email = form.email.data
-            password = sha256_crypt.encrypt((str(form.password.data)))
+            passowrd = sha256_crypt.encrypt((str(form.passowrd.data)))
 
             c, conn = connection()
 
-            x = c.execute("SELECT * FROM users WHERE username= ('{0}')".format((thwart(username))))
+            x = c.execute("SELECT * FROM users WHERE username = ('{0}')".format((thwart(username))))
                     
             if int(x) > 0:
                 flash("That username is already taken, please choose another")
                 return render_template("register.html", form = form)
             else:
-                c.execute("INSERT INTO users(username, password, email, tracking) VALUES ('{0}','{1}','{2}','{3}')".format(thwart(username),thwart(password),thwart(email),thwart("/dashboard/")))
+                c.execute("INSERT INTO users(username, passowrd, email, tracking) VALUES ('{0}','{1}','{2}','{3}')".format(thwart(username),thwart(passowrd),thwart(email),thwart("/dashboard/")))
             conn.commit()
             flash("Thanks for registering!")
             c.close()
@@ -147,7 +147,33 @@ def register_page():
     except Exception as e:
         return(str(e))
                     
-                    
+
+@app.route('/sitemap.xml/', methods=["GET"])
+
+def sitemap():
+    try:
+        page = []
+        week = (datetime.now() - timedelta(days = 7)).date().isoformat()
+        for rule in app.url_map.iter_rules():
+            if "GET" in rule.methods and len(rule.arguments)==0:
+                page.append(["https://imagefinder.space"+str(rule.rule),week])
+        sitemap_xml = render_template('sitemap_template.xml', page = page)
+        response = make_response(sitemap_xml)
+        response.headers["Content-Type"] = "application/xml"
+        return response
+    except Exception as e:
+        return(str(e))
+    
+@app.route("/welcome/")
+def templating():
+    try:
+        output = ["DIGIT400 is good", "Python, Java, php, SQL, C++, ",",<p><string>Hello World!</string></p>",42,"42"]
+        return render_template("templating_demo.html", output = output)
+        
+    except Exception as e:
+        return(str(e)) # remove for production
+    
+    
     
 @app.route("/dashboard/")
 def dashboard():
@@ -166,6 +192,5 @@ def page_not_found(e):
 
 if __name__ == "__main__":
     app.run()
-    
     
     

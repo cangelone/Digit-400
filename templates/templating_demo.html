@@ -1,0 +1,47 @@
+{% extends "header.html"  %}
+
+{% block body  %}
+<div class ="container">
+
+<h1> basic variable ouput</h1>
+
+<p>{{output}}</p>
+<hr>
+<h1> basic for loop</h1>
+
+{% for item in output %}
+<p>{{item}}</p>
+    
+{% endfor  %}
+    <hr>
+    
+    <h1> if statement with |int</h1>
+    
+    {% if output[4] | int >10  %}
+    
+    <p>42 is greater than 10.</p>
+    
+    {% endif %}
+    <hr>
+    <h1>.replace() mehtod</h1>
+    <p>{{output[0]| replace('good','AMAZING!!') }}</p>
+    <hr>
+    <h1> Loop through a string with .split() and make a list</h1>
+    
+    <ul>
+        {% for long in output[1].split('.') %}
+            <li>{{lang}}</li>
+        {% endfor %}
+    </ul>
+    
+    
+    
+</div>
+
+
+
+
+
+
+
+{% endblock   %}
