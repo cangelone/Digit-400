@@ -1,3 +1,5 @@
+from werkzeug.utils import secure_filename
+from flask import send_file
 import os, sys; sys.path.append(os.path.dirname(os.path.realpath(__file__)))
 from flask import Flask, render_template, url_for, flash,redirect, request,session
 from wtforms import Form, BooleanField, TextField, PasswordField, validators
@@ -19,7 +21,13 @@ APP_CONTENT = {
     "Contact":[["Contact","/contact/","In order to contact me..."],],
 }
 
-app = Flask(__name__)
+UPLOAD_FOLDER = '/var/www/FlaskApp/FlaskApp/uploads'
+ALLOWED_EXTENSIONS = set(['txt', 'png', 'jpg', 'jpeg', 'gif'])
+app = Flask(__name__, instance_path='/var/www/FlaskApp/FlaskApp/protected')
+app.config['UPLOAD_Folder'] = UPLOAD_FOLDER
+
+def allowed_file(filename):
+    return '.' in filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def login_required(f):
     @wraps(f)
@@ -182,6 +190,45 @@ def dashboard():
     except Exception as e:
         return render_template("500.html", error = e)
 
+
+    
+    
+
+
+
+
+@app.route("/uploads/", methods=["GET","POST"])
+
+@login_required
+
+def upload_file():
+
+    try:
+
+        if request.method == "POST":
+
+            if 'file' not in request.files: #check to see if we have a valid file name with file type suffix
+
+                flash('Incomplete filename. Please add valid file type suffix.')
+
+                return redirect(request.url)
+
+            file = request.files['file']
+            if file.filename == '':
+                flash('No selected file')
+                return redirect(request.url)
+            if file and allowed_file(file.filename):
+                filename = secure_filename(file.filename) 
+                file.save(os.path.join(app.config["UPLOAD_FOLDER"],filename))
+                flash("File upload successful.")
+                return render_template("uploads.html", filename = filename)
+            else:
+                flash("Invalid file type. Please add valid filename.")
+                return redirect(request.url)
+        return render_template("uploads.html")
+    except Exception as e:
+        return(str(e))
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template("404.html")
@@ -192,5 +239,3 @@ def page_not_found(e):
 
 if __name__ == "__main__":
     app.run()
-    
-    

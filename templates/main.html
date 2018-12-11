@@ -20,21 +20,23 @@
 <!-- Nav Bar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="/"> <img src="{{url_for('static',filename='images/mainlogo.png')  }}" width="30" height="30" class="d-inline-block align-top" alt="">
-    Bootstrap Navbar</a>
+    the helpful car image finder</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Features</a>
+        <a class="nav-link" href="/about/">
+          about</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" data-toggle="modal" data-target="#exampleModal" href="#">Login</a>
+        <a class="nav-link" data-toggle="modal" data-target="#exampleModal" href="/login/">login</a>
           <!--For modern browsers-->
+          
 
 <i class="material-icons">
 photo_camera
@@ -57,10 +59,48 @@ photo_camera
     </ul>
   </div>
 </nav>
-
-<video autoplay="autoplay" controls loop muted poster="{{ url_for('static',filename='images/space_cats.png') }}" width="100%">
-<source src="{{ url_for('static',filename='images/space_cats.mp4') }}" type="video/mp4">
-      </video>     
+<div class="card-deck">
+  <div class="card">
+    <img class="card-img-top" src="{{ url_for('static',filename='images/car.jpg') }}" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">Card title</h5>
+      <p class="card-text">The 2018 BMW m3 is a great coupe with a price close to 70,00 dollars. It makes about 370 horsepower. You can tell just by looking at the car that it has aggressive styling.</p>
+      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+    </div>
+  </div>
+  <div class="card">
+    <img class="card-img-top" src="{{url_for('static',filename='images/3.0-csl.jpg')}}" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">Card title</h5>
+      <p class="card-text"> This is a 1970 BMW 3.0 csl coupe which made about 180 horsepower which was a decent amount in 1970. This vehicle type was very popular in racing series. It made quite the good reputation for itself.</p>
+      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+    </div>
+  </div>
+      </div>
+  <div class="card-deck">
+  <div class="card">
+    <img class="card-img-top" src="{{url_for('static',filename='images/Porsche-901-Prototype.jpg')}}" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">Card title</h5>
+      <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+    </div>
+  </div>
+  <div class="card">
+    <img class="card-img-top" src="{{url_for('static',filename='images/2019-porsche-911-spied-uncovered-12.png')}}" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">Card title</h5>
+      <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+    </div>
+  </div>
+      </div>    
+      
+       
+      
+      
+            
+      
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

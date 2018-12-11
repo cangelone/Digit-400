@@ -3,12 +3,10 @@
 {% block body %}
 <div class="container">
 
-
-<h1>Internal Server error</h1>
-
-<p>Oops! Something broke! <code>{{ error }}</code> </p>
-    <a href="javascript:history.go(-1)"><button type="button" class="btn btn-warning">Go Back!</button></a>
+<h1>About</h1>
+<p> This is my about page</p>
+<p> This website serves a good purpose. This site is to be used to help people find inofrmation on car images, and images in general. </p>
 </div>
 
-<img src="{{ url_for('static',filename='images/dancecat.gif') }}" width="35%" style="float: right" class="fixed-bottom">
+
 {% endblock %}

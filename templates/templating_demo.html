@@ -34,9 +34,25 @@
         {% endfor %}
     </ul>
     
+    <hr>
     
-    
-</div>
+    <h1> Render HTML with "|safe"<h1>
+        
+        {{output[2]|safe}}
+        <hr>
+        <h1> the raw operator</h1>
+        
+        {% raw %}
+        <pre>
+        {% for i in items %}
+        {{item}}
+        {% end for %}
+        </pre>
+        
+        
+        {% endraw %}
+        
+    </div>
 
 
 
